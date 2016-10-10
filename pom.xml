@@ -5,9 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>be.nabu.packaging</groupId>
 	<artifactId>packaging-developer</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>${be.nabu.packaging-packaging-developer-version}</version>
 	<name>Nabu Developer</name>
 	<url>http://maven.apache.org</url>
+	
+	<parent>
+		<groupId>be.nabu</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -41,7 +48,7 @@
 						</goals>
 						<configuration>
 							<appendAssemblyId>false</appendAssemblyId>
-							<finalName>developer</finalName>
+							<finalName>developer-${project.version}</finalName>
 							<descriptors>
 								<descriptor>src/main/assembly/nabu-developer-assembly.xml</descriptor>
 							</descriptors>
@@ -49,19 +56,12 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.3.7</version>
-				<extensions>true</extensions>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
 			<groupId>be.nabu.eai</groupId>
 			<artifactId>eai-developer</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
