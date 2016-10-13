@@ -8,7 +8,7 @@
 	<version>${be.nabu.packaging-packaging-developer-version}</version>
 	<name>Nabu Developer</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<parent>
 		<groupId>be.nabu</groupId>
 		<artifactId>core</artifactId>
@@ -62,6 +62,11 @@
 		<dependency>
 			<groupId>be.nabu.eai</groupId>
 			<artifactId>eai-developer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
