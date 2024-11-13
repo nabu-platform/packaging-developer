@@ -54,10 +54,16 @@
 		</plugins>
 	</build>
 	<dependencies>
-                <dependency>
-                        <groupId>nabu</groupId>
-                        <artifactId>eai-module-maven</artifactId>
-                </dependency>
+        <dependency>
+            <groupId>nabu</groupId>
+            <artifactId>eai-module-maven</artifactId>
+        </dependency>
+        <dependency>
+		    <groupId>javax.xml.crypto</groupId>
+		    <artifactId>jsr105-api</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>be.nabu.eai</groupId>
 			<artifactId>eai-developer</artifactId>
