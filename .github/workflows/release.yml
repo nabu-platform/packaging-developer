@@ -311,7 +311,7 @@ PY
             echo 'Could not find eai-developer main jar'
             exit 1
           fi
-          app_version=$(python3 - <<'PY' "$version"
+          app_version=$(python3 - "$version" <<'PY'
 import re, sys
 version = sys.argv[1]
 clean = re.sub(r'[^0-9.]', '.', version)
