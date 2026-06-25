@@ -347,7 +347,7 @@ jobs:
             echo 'Could not find eai-developer main jar'
             exit 1
           fi
-          app_version=$(python3 -c "import re, sys; version = sys.argv[1]; clean = re.sub(r'[^0-9.]', '.', version); parts = [p for p in clean.split('.') if p]; print('.'.join(parts[:3]) if parts else '1.0.0')" "$version")
+          app_version=$(python3 -c "import re, sys; version = sys.argv[1]; clean = re.sub(r'[^0-9.]', '.', version); raw = [int(p) for p in clean.split('.') if p]; parts = (raw + [0, 0, 0])[:3]; parts[2] = min(parts[2], 65535); print(f'{parts[0]}.{parts[1]}.{parts[2]}')" "$version")
           out_dir="$RUNNER_TEMP/jpackage-out"
           mkdir -p "$out_dir"
           jpackage \
