@@ -170,19 +170,25 @@ jobs:
           - os: ubuntu-latest
             package_type: deb
             package_glob: '*.deb'
-            icon: ../eai-developer/src/main/resources/icon.png
+            icon: icon.png
           - os: windows-latest
             package_type: exe
             package_glob: '*.exe'
-            icon: ../eai-developer/src/main/resources/icon.png
+            icon: icon.png
           - os: macos-latest
             package_type: dmg
             package_glob: '*.dmg'
-            icon: ../eai-developer/src/main/resources/icon.icns
+            icon: icon.icns
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out sources
         uses: actions/checkout@v4
+
+      - name: Check out eai-developer resources
+        uses: actions/checkout@v4
+        with:
+          repository: nabu-platform/eai-developer
+          path: .tmp-eai-developer
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -289,7 +295,15 @@ jobs:
           fi
           echo "value=$release_version" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare packaging assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .tmp-eai-developer/src/main/resources/icon.png ./icon.png
+          cp .tmp-eai-developer/src/main/resources/icon.icns ./icon.icns
+
       - name: Set application version
+        shell: bash
         run: mvn -s "$HOME/.m2/settings.xml" -B versions:set -DnewVersion=${{ steps.version.outputs.value }} -DgenerateBackupPoms=false
 
       - name: Prepare signing keystore
@@ -301,6 +315,7 @@ jobs:
           SIGN_KEYSTORE_BASE64: ${{ secrets.SIGN_KEYSTORE_BASE64 }}
 
       - name: Build application zip
+        shell: bash
         run: >-
           mvn -s "$HOME/.m2/settings.xml" -B -Duser.timezone=UTC clean package
           -Dsign.keystore=$RUNNER_TEMP/github-ci-signing.jks
