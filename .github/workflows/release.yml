@@ -288,14 +288,7 @@ jobs:
           workspace="$RUNNER_TEMP/developer-package"
           mkdir -p "$workspace"
           cp "target/developer-${{ steps.version.outputs.value }}.zip" "$workspace/developer.zip"
-          cd "$workspace"
-          python3 - "$workspace" <<'PY'
-import sys, zipfile, pathlib
-workspace = pathlib.Path(sys.argv[1])
-zip_path = workspace / 'developer.zip'
-with zipfile.ZipFile(zip_path) as archive:
-	archive.extractall(workspace)
-PY
+          python3 -c "import pathlib, zipfile; workspace = pathlib.Path(r'$workspace'); zip_path = workspace / 'developer.zip'; zipfile.ZipFile(zip_path).extractall(workspace)"
           echo "workspace=$workspace" >> "$GITHUB_OUTPUT"
         id: package_workspace
 
@@ -311,14 +304,7 @@ PY
             echo 'Could not find eai-developer main jar'
             exit 1
           fi
-          app_version=$(python3 - "$version" <<'PY'
-import re, sys
-version = sys.argv[1]
-clean = re.sub(r'[^0-9.]', '.', version)
-parts = [p for p in clean.split('.') if p]
-print('.'.join(parts[:3]) if parts else '1.0.0')
-PY
-)
+          app_version=$(python3 -c "import re, sys; version = sys.argv[1]; clean = re.sub(r'[^0-9.]', '.', version); parts = [p for p in clean.split('.') if p]; print('.'.join(parts[:3]) if parts else '1.0.0')" "$version")
           out_dir="$RUNNER_TEMP/jpackage-out"
           mkdir -p "$out_dir"
           jpackage \
