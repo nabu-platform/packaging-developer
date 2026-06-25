@@ -289,13 +289,13 @@ jobs:
           mkdir -p "$workspace"
           cp "target/developer-${{ steps.version.outputs.value }}.zip" "$workspace/developer.zip"
           cd "$workspace"
-          python3 - <<'PY'
+          python3 - "$workspace" <<'PY'
 import sys, zipfile, pathlib
 workspace = pathlib.Path(sys.argv[1])
 zip_path = workspace / 'developer.zip'
 with zipfile.ZipFile(zip_path) as archive:
 	archive.extractall(workspace)
-PY "$workspace"
+PY
           echo "workspace=$workspace" >> "$GITHUB_OUTPUT"
         id: package_workspace
 
