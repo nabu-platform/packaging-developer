@@ -170,15 +170,15 @@ jobs:
           - os: ubuntu-latest
             package_type: deb
             package_glob: '*.deb'
-            icon: eai-developer/src/main/resources/icon.png
+            icon: ../eai-developer/src/main/resources/icon.png
           - os: windows-latest
             package_type: exe
             package_glob: '*.exe'
-            icon: eai-developer/src/main/resources/icon.png
+            icon: ../eai-developer/src/main/resources/icon.png
           - os: macos-latest
             package_type: dmg
             package_glob: '*.dmg'
-            icon: eai-developer/src/main/resources/icon.icns
+            icon: ../eai-developer/src/main/resources/icon.icns
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out sources
